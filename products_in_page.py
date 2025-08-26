@@ -103,7 +103,7 @@ if st.session_state.authenticated:
     options = ["JS_DE", "JS_AT", "MD_DE", "MD_AT", "MD_CH"]
 
     st.subheader("🔎 Enter Your Filter Queries")
-    st.info("**You can get your queries by navigation to the page you want and pasting this in the console**: \n\
+    st.info("**You can get your queries by navigation to the page you want, REFRESH, and paste this in the console**: \n\
     Evelin.data['product-listing-fragment'].rootComponentProps.algoliaConfig\
     .serverState.initialResults['product-list-1'].state.filters")
 
@@ -212,7 +212,9 @@ if st.session_state.authenticated:
             st.subheader("📊 Results Table")
             st.dataframe(st.session_state.last_results_df)
 
-            csv = st.session_state.last_results_df.to_csv(index=False).encode("utf-8")
-            st.download_button("⬇️ Download CSV", csv, "results.csv", "text/csv")
+            csv = st.session_state.last_results_df.to_csv(index=False)
+            csv_with_bom = '\ufeff' + csv 
+            csv_bytes = csv_with_bom.encode('utf-8')
+            st.download_button("⬇️ Download CSV", csv_bytes, "results.csv", "text/csv")
     else:
         st.info("Select tenants and add at least one filter to continue.")
