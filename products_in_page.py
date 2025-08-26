@@ -203,6 +203,7 @@ if st.session_state.authenticated:
                         df = pd.DataFrame(all_results)
                         df = df.drop_duplicates()
                         st.session_state.last_results_df = df
+                        st.session_state.last_results_df.drop_duplicates()
 
 
                     except Exception as e:
